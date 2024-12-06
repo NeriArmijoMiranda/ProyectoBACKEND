@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+<!-- Formulario de Filtros -->
+    <form method="GET" action="/">
+        <!-- Filtro por nombre (query) -->
+        <input type="text" name="query" value="{{query}}" placeholder="Buscar por nombre">
+        <!-- Botón de filtro -->
+        <button type="submit">Filtrar</button>
+
+        <!-- Filtro por categoría -->
+        <select name="category">
+            <option value="">Todas las categorías</option>
+            <option value="Panadería" {{#if (eq category "Panadería")}}selected{{/if}}>Panadería</option>
+            <option value="Frios" {{#if (eq category "Frios")}}selected{{/if}}>Frios</option>
+            <option value="Repostería" {{#if (eq category "Repostería")}}selected{{/if}}>Repostería</option>
+            <option value="Lacteos" {{#if (eq category "Lacteos")}}selected{{/if}}>Lacteos</option>
+            <option value="Conservas" {{#if (eq category "Conservas")}}selected{{/if}}>Conservas</option>
+            <option value="Cereales" {{#if (eq category "Cereales")}}selected{{/if}}>Cereales</option>
+            <option value="Abarrotes" {{#if (eq category "Abarrotes")}}selected{{/if}}>Abarrotes <option>        
+            <option value="Dulces" {{#if (eq category "Dulces")}}selected{{/if}}>Dulces</option>                                 
+        </select>
+        
+
+        <!-- Filtro por orden de precio -->
+        <select name="sort">
+            <option value="asc" {{#if (eq sort "asc")}}selected{{/if}}>Precio ascendente</option>
+            <option value="desc" {{#if (eq sort "desc")}}selected{{/if}}>Precio descendente</option>
+        </select>
+
+    </form>
+
+
+    <ul>
+        {{#each productos}}
+        <div class="productos">
+            <li>
+                <h2>{{this.title}} ({{this.code}})</h2>
+                <p>{{this.description}}</p>
+                <p>Precio: ${{this.price}}</p>
+                <p>Stock: {{this.stock}}</p>
+                <img src="{{this.img}}" alt="{{this.title}}" style="width:100px;height:auto;"/>
+                <p>category: {{this.category}}</p>
+                <p>available: {{this.available}}</p>
+            </li>
+            </div>
+        {{/each}}
+    </ul>
+
+
+    <div class="paginacion">
+    {{#if hasPrevPage}}
+        <a href="/?page={{prevPage}}&category={{category}}&query={{query}}"> Anterior </a>
+    {{/if}}
+
+    {{#if hasNextPage}}
+        <a href="/?page={{nextPage}}&category={{category}}&query={{query}}"> Siguiente </a>
+    {{/if}}
+
+        <p> Página {{currentPage}} de {{totalPages}} </p>
+    </div>
+</body>
+</html>

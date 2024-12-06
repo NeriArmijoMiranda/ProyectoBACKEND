@@ -1,0 +1,112 @@
+[
+    {
+    "title": "Galletas",
+    "description": "con chispas de chocolate",
+    "price": 20,
+    "img": "../public/img/galletas_chispas.jpeg",
+    "code": "abc555",
+    "stock": 33,
+    "category": "Panadería",  
+    "available": true   
+    },
+    {
+    "title": "Helado",
+    "description": "de arcoiris",
+    "price": 150,
+    "img": "../public/img/helado_arcoiris.jpg",
+    "code": "def456",
+    "stock": 30,
+    "category": "Frios",  
+    "available": true   
+    },
+    {
+    "title": "Pastel",
+    "description": "Red Velvet",
+    "price": 180,
+    "img": "../public/img/pastel_red_velvet.jpeg",
+    "code": "ghi789",
+    "stock": 20,
+    "category": "Repostería",  
+    "available": true   
+    },
+    {
+    "title": "Gelatina",
+    "description": "de mosaico",
+    "price": 350,
+    "img": "../public/img/gelatina-mosaico.jpg",
+    "code": "jkl012",
+    "stock": 15,
+    "category": "Repostería",  
+    "available": true   
+    },
+    {
+    "title": "Leche",
+    "description": "de fresa",
+    "price": 120,
+    "img": "../public/img/leche-fresa.jpg",
+    "code": "mno345",
+    "stock": 40,
+    "category": "Lacteos", 
+    "available": true   
+    },
+    {
+    "title": "Mermelada",
+    "description": "de granada",
+    "price": 250,
+    "img": "../public/img/Mermelada_de_granada.jpg",
+    "code": "pqr678",
+    "stock": 22,
+    "category": "Conservas",  
+    "available": true   
+    },
+    {
+    "title": "Pay",
+    "description": "de queso de cabra",
+    "price": 90,
+    "img": "../public/img/pay-de-queso.jpg",
+    "code": "stu901",
+    "stock": 35,
+    "category": "Repostería",  
+    "available": true   
+    },
+    {
+    "title": "Cereal",
+    "description": "Trix Trix",
+    "price": 400,
+    "img": "../public/img/cereal-trix.jpeg",
+    "code": "vwx234",
+    "stock": 18,
+    "category": "Cereales",  
+    "available": true   
+    },
+    {
+    "title": "Bombones",
+    "description": "de colores",
+    "price": 170,
+    "img": "../public/img/Bombones-de-Colores.jpg",
+    "code": "yz1234",
+    "stock": 28,
+    "category": "Dulces",  
+    "available": true   
+    },
+    {
+    "title": "Jugo",
+    "description": "de mandarina",
+    "price": 220,
+    "img": "../public/img/jugo-mandarina.jpeg",
+    "code": "abc567",
+    "stock": 33,
+    "category": "Abarrotes",  
+    "available": true   
+    },
+    {
+    "title": "Arroz",
+    "description": "con leche",
+    "price": 5000,
+    "img": "../public/img/arroz-con-leche.jpg",
+    "code": "aaa558",
+    "stock": 300,
+    "category": "Cereales",  
+    "available": true   
+    }
+]
