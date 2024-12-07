@@ -133,11 +133,10 @@ app.get("/", async (req, res) => {
 // Ruta para la vista en tiempo real con WebSockets
 app.get("/realtimeproducts", async (req, res) => {
     try {
-        // Aquí debes obtener los productos según la página y el límite, tal como lo haces en la ruta "/"
-        const page1 = parseInt(req.query.page) || 1;
+        const page = parseInt(req.query.page) || 1;
         const limit = 3;  // Número de productos por página
-
-        const productsListado = await ProductModel.paginate({}, { page1, limit });
+        // Paginación con 'page' y 'limit'
+        const productsListado = await ProductModel.paginate({}, { page, limit });
         console.log("Productos paginados:", productsListado.docs);  // Muestra los productos de la página actual
         const productos1 = productsListado.docs.map(doc => doc.toObject());
 
