@@ -4,8 +4,8 @@ const socket = io();
 
 //Lo que tengo que hacer es escuchar al Backend, que este me va a mandar los productos: 
 
-socket.on("updateProducts", (productos) => {
-    renderProductos(productos);
+socket.on("updateProducts", (productos1) => {
+    renderProductos(productos1);
 })
 
 // Función para renderizar nuestros productos

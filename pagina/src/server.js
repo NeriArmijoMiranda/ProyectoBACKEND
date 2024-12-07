@@ -16,7 +16,7 @@ import ProductManager from "./managers/products-manager.js";
 const productsFilePath = path.join(process.cwd(),'src',  'data',  'products.json');
 
 
-if (existsSync(productsFilePath)) {
+/*if (existsSync(productsFilePath)) {
     try {
         const data = readFileSync(productsFilePath, 'utf-8');
         const products = JSON.parse(data);
@@ -26,7 +26,7 @@ if (existsSync(productsFilePath)) {
     }
 } else {
     console.error('El archivo products.json no existe en la ruta:', productsFilePath);
-} 
+} */
 
 const app = express(); 
 const PUERTO = 8080;
@@ -160,12 +160,11 @@ app.get("/realtimeproducts", async (req, res) => {
 // Configuración de WebSockets
 io.on("connection", async (socket) => {
     console.log("Cliente conectado");
-    
-  // Emitir productos iniciales al conectar un cliente
-    ProductModel.find().then(productos => {
+
+// Emitir productos iniciales al conectar un cliente
+ProductModel.find().then(productos => {
     socket.emit("updateProducts", productos); // Enviar los productos actuales al cliente
 });
-
 //Debo traer el array de productos: 
 /* const manager = new ProductManager("./src/data/products.json"); */
 
@@ -181,7 +180,6 @@ io.on("connection", async (socket) => {
 
 
 
-
     // Escuchar cuando se elimina un producto
     socket.on("deleteProduct", async (productId) => {
         console.log("Producto eliminado:", productId);
@@ -192,7 +190,6 @@ io.on("connection", async (socket) => {
         });
     });
 });
-
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
 
