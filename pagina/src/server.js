@@ -6,8 +6,7 @@ import {existsSync, readFileSync } from 'fs';
 import path from "path";
 import { fileURLToPath } from "url"; // Para manejar las rutas de archivos
 import productRouter from "./routes/products.router.js";
-import cartRouter from "./routes/carts.router.js";
-import viewsRouter from "./routes/views.router.js";
+import cartsRouter from "./routes/carts.router.js";
 import "./database.js";
 import ProductModel from "./models/product.model.js";
 import CartModel from "./models/cart.model.js";
@@ -46,7 +45,7 @@ app.use(express.json());
 
 //Rutas
 app.use("/api/products", productRouter);
-app.use("/api/carts", cartRouter);
+app.use("/api/carts", cartsRouter);
 
 // Configurar el motor de plantillas Handlebars
 app.engine('handlebars', engine({
@@ -197,6 +196,18 @@ io.on("connection", async (socket) => {
 
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
+
+// Ruta para ver los carritos en el frontend
+app.get("/api/carts", async (req, res) => {
+    try {
+        const carritos = await manager.carts;  // Obtén todos los carritos
+        res.render("carts", { carrito });  // Pasa los carritos a la vista
+    } catch (error) {
+        res.status(500).send("Error al obtener los carritos");
+    }
+});
+
+
 
 
 app.listen(PUERTO, () => {

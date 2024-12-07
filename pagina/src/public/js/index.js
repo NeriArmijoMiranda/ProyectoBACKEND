@@ -1,3 +1,5 @@
+import CartManager from "../../managers/carts-manager";
+
 const socket = io(); 
 //La instancia de Socket.io del lado del cliente. 
 

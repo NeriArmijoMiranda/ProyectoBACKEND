@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carritos</title>
+</head>
+<body>
+    <h1>Lista de Carritos</h1>
+    
+    {{#if carrito}} <!-- Verifica si hay carritos -->
+        {{#each carrito}} <!-- Recorre todos los carritos -->
+            {{#if this.products.length}}  <!-- Verifica si el carrito tiene productos -->
+                <div>
+                    <p><strong>Carrito ID: {{this.id}}</strong></p>
+                    <ul>
+                        {{#each this.products}} <!-- Recorre los productos de cada carrito -->
+                            <li>Producto ID: {{this.product}} - Cantidad: {{this.quantity}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{else}}
+                <p>Carrito ID: {{this.id}} está vacío.</p> <!-- Si el carrito está vacío -->
+            {{/if}}
+        {{/each}}
+    {{else}}
+        <p>No hay carritos disponibles.</p> <!-- Si no hay carritos -->
+    {{/if}}
+
+</body>
+</html>

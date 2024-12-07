@@ -23,7 +23,7 @@
             <option value="Lacteos" {{#if (eq category "Lacteos")}}selected{{/if}}>Lacteos</option>
             <option value="Conservas" {{#if (eq category "Conservas")}}selected{{/if}}>Conservas</option>
             <option value="Cereales" {{#if (eq category "Cereales")}}selected{{/if}}>Cereales</option>
-            <option value="Abarrotes" {{#if (eq category "Abarrotes")}}selected{{/if}}>Abarrotes <option>        
+            <option value="Abarrotes" {{#if (eq category "Abarrotes")}}selected{{/if}}>Abarrotes</option>        
             <option value="Dulces" {{#if (eq category "Dulces")}}selected{{/if}}>Dulces</option>                                 
         </select>
         
@@ -48,10 +48,41 @@
                 <img src="{{this.img}}" alt="{{this.title}}" style="width:100px;height:auto;"/>
                 <p>category: {{this.category}}</p>
                 <p>available: {{this.available}}</p>
+
+                <!-- Formulario para añadir al carrito -->
+                <form action="/api/carts/{{cartId}}/products/{{this.id}}" method="POST">
+                    <label for="quantity">Cantidad:</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{this.stock}}" required>
+
+                    <button type="submit">Añadir al carrito</button>
+                </form>
+
             </li>
             </div>
         {{/each}}
     </ul>
+
+    <div>
+        <h1>Lista de Carritos</h1>
+    <div id="contenedor-carritos"></div>
+    <ul>
+        {{#each carritos}} <!-- Itera sobre los carritos -->
+        <li>
+            <h2>Carrito ID: {{this.id}}</h2>
+            <ul>
+                {{#each this.products}} <!-- Itera sobre los productos de cada carrito -->
+                <li>
+                    <h3>{{this.details.title}} ({{this.details.code}})</h3>
+                    <p>Precio: ${{this.details.price}}</p>
+                    <p>Cantidad: {{this.quantity}}</p>
+                </li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/each}}
+    </ul>
+    </div>
+    </section>
 
 
     <div class="paginacion">
