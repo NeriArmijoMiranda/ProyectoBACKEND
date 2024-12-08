@@ -9,7 +9,6 @@
     <h1>Lista de Productos</h1>
 <!-- Formulario de Filtros -->
     <form method="GET" action="/">
-        <!-- Filtro por nombre (query) -->
         <input type="text" name="query" value="{{query}}" placeholder="Buscar por nombre">
         <!-- Botón de filtro -->
         <button type="submit">Filtrar</button>
@@ -48,6 +47,9 @@
                 <img src="{{this.img}}" alt="{{this.title}}" style="width:100px;height:auto;"/>
                 <p>category: {{this.category}}</p>
                 <p>available: {{this.available}}</p>
+
+                <!-- Enlace a los detalles del producto -->
+            <a href="/product/{{this._id}}">Ver detalles</a>
 
                 <!-- Formulario para añadir al carrito -->
                 <form action="/api/carts/{{cartId}}/products/{{this.id}}" method="POST">

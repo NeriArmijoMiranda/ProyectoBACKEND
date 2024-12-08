@@ -21,35 +21,6 @@
         {{/each}}
     </ul>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
-
-        // Escuchar cuando se actualizan los productos
-        socket.on('updateProducts', (productos1) => {
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = '';  // Limpiar la lista
-
-            // Agregar cada producto a la lista
-            productos1.forEach((product) => {
-            const productItem = `
-                    <li>
-                        <h2>${product.title} (${product.code})</h2>
-                        <p>${product.description}</p>
-                        <p>Precio: $${product.price}</p>
-                        <p>Imagen: ${product.img}</p>
-                        <p>Code: ${product.code}</p>
-                        <p>Stock: ${product.stock}</p>
-                        <p>category: ${{this.category}}</p>
-                <p>available: ${{this.available}}</p>
-                        
-                    </li>
-                `;
-                productList.innerHTML += productItem;
-            });
-        });
-    </script>
-
 <div id="contenedorProductos"></div>
 <h2> Formulario para agregar productos </h2>
 
@@ -68,8 +39,8 @@
     <button type="button" id="btnEnviar"> Enviar </button>
 </form>
 
-<script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
-<script src="../public/js/index.js"></script>    
+<script type="module" src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+<script type="module"src="../public/js/index.js"></script>    
 
     <div class="paginacion">
     {{#if hasPrevPage}}
@@ -82,5 +53,6 @@
 
     <p>Página {{currentPage}} de {{totalPages}}</p>
 </div>
+<script type="module" src="/socket.io/socket.io.js"></script>
 </body>
 </html>

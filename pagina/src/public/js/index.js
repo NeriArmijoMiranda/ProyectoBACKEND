@@ -1,4 +1,4 @@
-const socket = io(); 
+const socket = io('http://localhost:8080'); 
 //La instancia de Socket.io del lado del cliente. 
 
 
@@ -22,7 +22,7 @@ const renderProductos = (productos1) => {
                             <p> ${item.id} </p>
                             <p> ${item.title} </p>
                             <p> ${item.price} </p>
-                            <button> Eliminar </button>
+                            <button class="btnEliminar" data-id="${item.id}"> Eliminar </button>
                         `
         
         contenedorProductos.appendChild(card);
@@ -34,15 +34,15 @@ const renderProductos = (productos1) => {
 }
 
 const eliminarProductos = (id) => {
-    socket.emit("eliminarProducto", id);
+    socket.emit("deleteProduct", id);
 }
 
 //Agregamos productos del formulario: 
 document.getElementById("btnEnviar").addEventListener("click", () => {
-    agregarProducto(); 
+    newProduct(); 
 })
 
-const agregarProducto = () => {
+const newProduct = () => {
     const producto = {
         title: document.getElementById("title").value,
         description: document.getElementById("description").value,
@@ -52,6 +52,11 @@ const agregarProducto = () => {
         stock: document.getElementById("stock").value,
         category: document.getElementById("category").value,
         status: document.getElementById("status").value === "true",
-    }
-    socket.emit("agregarProducto", producto); 
+    };
+    
+    if (producto.stock < 0 || producto.price < 0) {
+        alert("El stock o precio no pueden ser negativos.");
+        return;}
+    console.log(producto); // Verificar los datos del producto
+    socket.emit("newProduct", producto); 
 }

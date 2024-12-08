@@ -1,5 +1,8 @@
-import express from "express"; 
-import { Server as SocketServer } from "socket.io";
+
+import express from "express";
+import mongoose from 'mongoose'; 
+import viewsRouter from "./routes/views.router.js";
+import { Server as SocketIoServer } from "socket.io";
 import { createServer } from "http"; // Para crear el servidor HTTP
 import { engine } from "express-handlebars";
 import {existsSync, readFileSync } from 'fs';
@@ -10,7 +13,6 @@ import cartsRouter from "./routes/carts.router.js";
 import "./database.js";
 import ProductModel from "./models/product.model.js";
 import CartModel from "./models/cart.model.js";
-import ProductManager from "./managers/products-manager.js";
 
 // Definir la ruta del archivo products.json
 const productsFilePath = path.join(process.cwd(),'src',  'data',  'products.json');
@@ -58,7 +60,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Crear el servidor HTTP y conectar con socket.ios
 const server = createServer(app);
-const io = new SocketServer(server);
+const io = new SocketIoServer(server);
 
 // Llamar a los productos del JSON 
 let products;
@@ -127,6 +129,40 @@ app.get("/", async (req, res) => {
     }
 })
 
+// Ruta para obtener todos los productos
+app.get("/products", async (req, res) => {
+    try {
+        // Obtener todos los productos de la base de datos
+        const productos = await ProductModel.find();  // O tu lógica para obtener los productos
+
+        // Renderizar la vista con los productos
+        res.render("home", { productos });  
+    } catch (error) {
+        console.error("Error al obtener los productos:", error);
+        res.status(500).send("Error al obtener los productos");
+    }
+});
+
+
+// Ruta para obtener un producto por su ID
+app.get('/product/:id', async (req, res) => {
+    const productId = req.params.id;
+
+    try {
+        // Usar findById() con await
+        const product = await ProductModel.findById(productId).lean(); // .lean() convierte el objeto a un objeto plano
+        
+        if (!product) {
+            return res.status(404).send("Producto no encontrado");
+        }
+
+        // Pasar los datos del producto a la vista de detalles
+        res.render('productsDetails', { product: product });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error al obtener el producto");
+    }
+});
 
 
 
@@ -170,12 +206,15 @@ ProductModel.find().then(productos => {
 
     // Escuchar cuando se agrega un nuevo producto
     socket.on("newProduct", async (product) => {
-        // Aquí agregar el producto a la base de datos y luego emitir la lista actualizada
-        await ProductModel.create(product).then(() => {
+        try {
+            const newProduct = await ProductModel.create(product);
+            console.log('Producto agregado:', newProduct); // Verificar que el producto fue agregado
             ProductModel.find().then(products => {
-                io.emit("updateProducts", products); // Actualizar a todos los clientes
+                io.emit("updateProducts", products); // Enviar productos actualizados a todos los clientes
             });
-        });
+        } catch (error) {
+            console.error('Error al agregar producto:', error);
+        }
     });
 
 

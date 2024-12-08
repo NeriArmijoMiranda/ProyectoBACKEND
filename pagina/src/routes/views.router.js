@@ -1,8 +1,8 @@
 import { Router } from "express";
+import ProductModel from "../models/product.model.js";
+import CartModel from "../models/cart.model.js";
 const router = Router(); 
 
-//Importamos al ProductModel: 
-import ProductModel from "../models/product.model.js";
 router.get("/products", async (req, res) => {
     const productos = await ProductModel.find().lean(); 
     res.render("home", {productos}); 
@@ -39,7 +39,7 @@ router.get("/api/carts", async (req, res) => {
 router.get("/carts/:cid", async (req, res) => {
     const carritoId = parseInt(req.params.cid);
     try {
-        const carrito = await manager.getCarritoById(carritoId);  // Obtén un carrito por su ID
+        const carrito = await CartModel.getCarritoById(carritoId).populate; // Obtén un carrito por su ID
         res.json(carrito);  // Devuelve el carrito con los productos desglosados
     } catch (error) {
         res.status(500).send("Error al obtener el carrito");
@@ -52,7 +52,7 @@ router.post("/:cid/products/:pid", async (req, res) => {
     const quantity = req.body.quantity || 1;
 
     try {
-        const carrito = await manager.agregarProductoAlCarrito(carritoId, productoId, quantity);
+        carritoId = await CartModel.agregarProductoAlCarrito(carritoId, productoId, quantity);
         res.redirect("/carts");  
     } catch (error) {
         res.status(500).send("Error al agregar el producto al carrito");
